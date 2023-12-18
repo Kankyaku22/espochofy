@@ -66,7 +66,7 @@ fun NowPlaying() {
 
         Image(
             painter = painterResource(id = R.drawable.camel),
-            contentDescription = "Screen Door",
+            contentDescription = "cammellazo",
             modifier = Modifier.size(350.dp),
             contentScale = ContentScale.FillBounds
         )
