@@ -13,20 +13,32 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Slider
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.PointerIcon
+import androidx.compose.ui.input.pointer.pointerHoverIcon
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.estapochofy.ui.theme.EstapochofyTheme
+import com.example.estapochofy.ui.theme.Song
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,6 +59,18 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun NowPlaying() {
+
+    val songs = listOf(
+        Song("accept", "accept","Accept", R.drawable.accept, R.raw.accept),
+        Song("Final Contdown", "Final Contdown","Europe", R.drawable.europe, R.raw.europe),
+        Song("Lady fantasy", "Mirage","Camel", R.drawable.camel, R.raw.lady_fantasy)
+    )
+
+    var currentSongIndex by remember { mutableStateOf(0) }
+    var isPlaying by remember { mutableStateOf(false) }
+
+    val currentSong = songs[currentSongIndex]
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -59,16 +83,18 @@ fun NowPlaying() {
             fontSize = 30.sp
                 )
         Text(
-            text = "Lady Fantasy",
+            text = currentSong.name,
             style = MaterialTheme.typography.bodyLarge,
             fontSize = 20.sp
         )
 
         Image(
-            painter = painterResource(id = R.drawable.camel),
-            contentDescription = "cammellazo",
-            modifier = Modifier.size(350.dp),
-            contentScale = ContentScale.FillBounds
+                painter = painterResource(id = currentSong.coverImage),
+                contentDescription = null,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(300.dp),
+                contentScale = ContentScale.Crop
         )
 
         Spacer(modifier = Modifier.height(16.dp))
@@ -83,12 +109,12 @@ fun NowPlaying() {
             fontSize = 15.sp
         )
         Text(
-            text = "Camel",
+            text =currentSong.name ,
             style = MaterialTheme.typography.bodyLarge,
             fontSize = 20.sp
         )
         Text(
-            text = "Mirage",
+            text = currentSong.album,
             style = MaterialTheme.typography.bodyMedium,
             fontSize = 14.sp
         )
@@ -125,13 +151,15 @@ fun NowPlaying() {
     
                  }
                 Button(onClick = { /*TODO*/ }, modifier = Modifier.padding()) {
-
+                Icon(Icons.Default.ArrowBack, contentDescription ="")
                 }
-                Button(onClick = { /*TODO*/ }, modifier = Modifier.padding()
+                Button(onClick = { /*TODO*/ }, modifier = Modifier
+                    .padding()
                     .size(70.dp)) {
+                    Icon(Icons.Default.PlayArrow, contentDescription ="")
             }
                 Button(onClick = { /*TODO*/ }, modifier = Modifier.padding()) {
-
+                    Icon(Icons.Default.ArrowForward, contentDescription ="")
                 }
                 Button(onClick = { /*TODO*/ }, modifier = Modifier.padding()) {
 
